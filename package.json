@@ -1,0 +1,14 @@
+{
+  "name": "randomideas",
+  "version": "1.0.0",
+  "description": "idea sharing app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "David Muregi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
