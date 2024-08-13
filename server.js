@@ -1,51 +1,23 @@
+const path = require("path");
 const express = require("express");
-const port = 3000;
+require("dotenv").config();
+const port = process.env.PORT || 8000;
+const connectDB = require("./config/db");
+
+connectDB();
 
 const app = express();
 
-const ideas = [
-  {
-    id: 1,
-    text: "Positive Newsletter, a newsletter that only shares positive, uplifting news",
-    tag: "Technology",
-    username: "TonyStark",
-    date: "2022-01-02",
-  },
-  {
-    id: 2,
-    text: "Milk cartons that turn a different color the older your milk is getting",
-    tag: "Inventions",
-    username: "SteveRogers",
-    date: "2022-01-02",
-  },
-  {
-    id: 3,
-    text: "ATM location app which lets you know where the closest ATM is and if it is in service",
-    tag: "Software",
-    username: "BruceBanner",
-    date: "2022-01-02",
-  },
-];
+// Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 //  app route
 app.get("/", (req, res) => {
-  res.send({ message: "Welcome to the RandomIdeas API" });
+  res.json({ message: "Welcome to the RandomIdeas API" });
 });
 
-// Get all ideas
-app.get("/api/ideas", (req, res) => {
-  res.json({ success: true, data: ideas });
-});
-
-// Get a single idea
-app.get("/api/ideas/:id", (req, res) => {
-  const idea = ideas.find((idea) => idea.id === +res.params.id);
-
-  if (!idea) {
-    return res
-      .status(404)
-      .json({ success: false, error: "Resource not found" });
-  }
-  res.json({ success: true, data: idea });
-});
+const ideasRouter = require("./routes/ideas");
+app.use("/api/ideas", ideasRouter);
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));
