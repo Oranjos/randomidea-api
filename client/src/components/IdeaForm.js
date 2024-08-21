@@ -21,7 +21,7 @@ class IdeaForm {
     this._form.elements.tag.value = "";
     this._form.elements.username.value = "";
 
-    // Closing the modal after submit
+    // Closing the modal after submit from the Modal
     document.dispatchEvent(new Event("closemodal"));
   }
   render() {
